@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation - Kechi's Kitchen</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #d4a574;
+            --secondary-color: #2c1810;
+            --accent-color: #ff6b35;
+            --light-bg: #f5f3f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--light-bg) 0%, #f0ebe5 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #4a2c1f 100%);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            color: var(--primary-color) !important;
+            font-weight: 700;
+        }
+
+        .nav-link {
+            color: #fff !important;
+        }
+
+        .container-custom {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .confirm-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .confirm-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+
+        .confirm-header h1 {
+            color: var(--secondary-color);
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .confirm-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .order-details {
+            background: var(--light-bg);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border-left: 5px solid var(--accent-color);
+        }
+
+        .order-details h3 {
+            color: var(--secondary-color);
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .order-item {
+            background: white;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #eee;
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-name {
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        .item-price {
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+
+        .order-total {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #3d251a 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .order-total p {
+            margin: 0 0 5px 0;
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .total-amount {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn-custom {
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .btn-confirm {
+            background: linear-gradient(135deg, var(--accent-color) 0%, #ff5722 100%);
+            color: white;
+        }
+
+        .btn-confirm:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.4);
+        }
+
+        .btn-back {
+            background: white;
+            color: var(--secondary-color);
+            border: 2px solid var(--secondary-color);
+        }
+
+        .btn-back:hover {
+            background: var(--light-bg);
+            transform: translateY(-3px);
+        }
+
+        .info-box {
+            background: var(--light-bg);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            color: #666;
+            font-size: 0.95rem;
+            margin-top: 20px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        footer {
+            background: var(--secondary-color);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        @media (max-width: 600px) {
+            .confirm-card {
+                padding: 25px;
+            }
+
+            .confirm-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">🍲 KECHI'S KITCHEN</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/menu">📋 Menu</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/contact">📞 Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-custom">
+        <div class="confirm-card">
+            <div class="confirm-header">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h1>Order Ready!</h1>
+                <p>Your delicious meal is being prepared for WhatsApp delivery</p>
+            </div>
+
+            <div class="order-details">
+                <h3>
+                    <i class="fas fa-list"></i> Order Summary
+                </h3>
+                <div id="orderSummary">
+                    <p>Loading order details...</p>
+                </div>
+            </div>
+
+            <div class="order-total">
+                <p>Total Amount</p>
+                <div class="total-amount" id="totalDisplay">₦0</div>
+            </div>
+
+            <div class="action-buttons">
+                <a href="/menu" class="btn-custom btn-back">
+                    <i class="fas fa-arrow-left"></i> Back to Menu
+                </a>
+                <button class="btn-custom btn-confirm" onclick="sendToWhatsApp()">
+                    <i class="fab fa-whatsapp"></i> Send Order
+                </button>
+            </div>
+
+            <div class="info-box">
+                <i class="fas fa-info-circle"></i> Click "Send Order" to continue on WhatsApp where you can discuss delivery location and payment
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Kechi's Kitchen. All rights reserved. | 📞 +234 906 783 7210</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // This page is now handled via the menu page's checkout function
+        // Keeping it for legacy support if needed
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const itemsParam = urlParams.get('items');
+            
+            if (itemsParam) {
+                document.getElementById('orderSummary').innerHTML = `<div class="order-item"><span class="item-name">${itemsParam}</span></div>`;
+            }
+        });
+
+        function sendToWhatsApp() {
+            const phone = "2349067837210";
+            const message = "I would like to place an order from Kechi's Kitchen";
+            const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+            window.location.href = whatsappUrl;
+        }
+    </script>
+</body>
+</html>

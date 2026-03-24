@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yummy Chow - Fresh Meals Delivered</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #d4a574;
+            --secondary-color: #2c1810;
+            --accent-color: #ff6b35;
+            --light-bg: #f5f3f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-bg);
+            background-image: url("/static/images/chef.png");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+
+        }
+
+        /* Navigation */
+        .navbar {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #4a2c1f 100%);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color) !important;
+            letter-spacing: 0.5px;
+        }
+
+        .navbar-brand small {
+            display: block;
+            font-size: 0.9rem;
+            color: #ddd;
+            letter-spacing: 0.3px;
+        }
+
+        .nav-link {
+            color: #fff !important;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            margin: 0 5px;
+            padding: 5px 10px !important;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+            transform: translateY(-2px);
+        }
+        
+        .navbar-toggler {
+            border: 1px solid var(--primary-color);
+            padding: 5px 10px;
+        }
+        
+        .navbar-toggler:focus {
+            box-shadow: 0 0 0 0.25rem rgba(212, 165, 116, 0.25);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #3d251a 100%);
+            color: white;
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><pattern id="dots" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="2" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="1200" height="600" fill="url(%23dots)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            animation: slideInDown 0.8s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            animation: slideInUp 0.8s ease;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #ddd;
+            line-height: 1.8;
+        }
+
+        .btn-cta {
+            background: var(--accent-color);
+            color: white;
+            padding: 12px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn-cta:hover {
+            background: #ff5722;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 107, 53, 0.3);
+            color: white;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 15px;
+            background: var(--light-bg);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-color);
+            box-shadow: 0 15px 30px rgba(212, 165, 116, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            display: inline-block;
+            width: 70px;
+            height: 70px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feature-card h3 {
+            color: var(--secondary-color);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--light-bg) 0%, white 100%);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--secondary-color);
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        .service-item {
+            background: white;
+            padding: 25px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border-left: 5px solid var(--accent-color);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .service-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+        }
+
+        .service-item h4 {
+            color: var(--secondary-color);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .service-item p {
+            color: #666;
+            margin: 0;
+        }
+
+        /* Two Column Layout */
+        .content-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .content-text h3 {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .content-text p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            margin: 60px 0;
+            border-radius: 10px;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary-color);
+            color: white;
+            padding: 40px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h5 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #ddd;
+            text-decoration: none;
+            display: block;
+            margin: 0.5rem 0;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-divider {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin: 20px 0;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            color: #999;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin: 0 5px;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        /* Animations */
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .hero {
+                padding: 50px 0;
+            }
+
+            .content-row {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .navbar-brand {
+                font-size: 1.3rem;
+            }
+            
+            .nav-link {
+                margin: 0 2px !important;
+                font-size: 0.9rem;
+            }
+            
+            .feature-card {
+                padding: 25px 15px;
+                margin-bottom: 15px;
+            }
+            
+            .feature-icon {
+                font-size: 2.5rem;
+            }
+            
+            .feature-card h3 {
+                font-size: 1.1rem;
+            }
+            
+            .feature-card p {
+                font-size: 0.9rem;
+            }
+            
+            .service-item {
+                padding: 15px;
+                margin: 10px 0;
+            }
+            
+            .service-item h4 {
+                font-size: 1rem;
+            }
+            
+            .service-item p {
+                font-size: 0.9rem;
+            }
+            
+            .cta-section {
+                padding: 40px 0;
+                margin: 40px 0;
+            }
+            
+            .cta-section h2 {
+                font-size: 1.8rem;
+            }
+            
+            .cta-section p {
+                font-size: 1rem;
+            }
+            
+            .btn-cta {
+                padding: 10px 30px;
+                font-size: 0.95rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.5rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 0.95rem;
+                margin-bottom: 1rem;
+            }
+            
+            .hero p {
+                font-size: 0.9rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .hero {
+                padding: 40px 0;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .navbar-brand {
+                font-size: 1.1rem;
+            }
+            
+            .navbar-brand small {
+                font-size: 0.75rem;
+            }
+            
+            .nav-link {
+                font-size: 0.8rem;
+                margin: 0 2px !important;
+            }
+            
+            .feature-card {
+                padding: 15px 10px;
+                margin-bottom: 10px;
+            }
+            
+            .feature-icon {
+                font-size: 2rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .feature-card h3 {
+                font-size: 1rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .feature-card p {
+                font-size: 0.8rem;
+                line-height: 1.4;
+            }
+            
+            .service-item {
+                padding: 12px;
+                margin: 8px 0;
+            }
+            
+            .service-item h4 {
+                font-size: 0.95rem;
+                margin-bottom: 0.3rem;
+            }
+            
+            .service-item p {
+                font-size: 0.8rem;
+            }
+            
+            .content-text h3 {
+                font-size: 1.3rem;
+                margin-bottom: 1rem;
+            }
+            
+            .content-text p {
+                font-size: 0.9rem;
+            }
+            
+            .cta-section {
+                padding: 30px 0;
+                margin: 30px 0;
+                border-radius: 5px;
+            }
+            
+            .cta-section h2 {
+                font-size: 1.5rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .cta-section p {
+                font-size: 0.9rem;
+                margin-bottom: 1rem;
+            }
+            
+            .btn-cta {
+                padding: 8px 25px;
+                font-size: 0.9rem;
+            }
+            
+            .footer-content {
+                display: block;
+            }
+            
+            .footer-section {
+                margin-bottom: 15px;
+            }
+            
+            .footer-section h5 {
+                font-size: 1rem;
+            }
+            
+            .footer-section p, .footer-section a {
+                font-size: 0.85rem;
+            }
+            
+            .social-icons a {
+                width: 35px;
+                height: 35px;
+                line-height: 35px;
+            }
+            
+            .features {
+                padding: 40px 0;
+            }
+            
+            .services {
+                padding: 40px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                🥘Yummy Chow
+                <small>Abuja, Nigeria</small>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/menu">Menu</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Fresh Food, from our Kitchen to your Doorstep.</h1>
+            <p class="hero-subtitle">Breakfast • Lunch • Dinner • Special Events </p>
+            <p> 🥘Yummy Chow brings you mouth watering, home-style meals prepared with the finest ingredients and delivered right to your doorstep!</p>
+            <a href="/menu" class="btn-cta">🛒 Order Now</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h3>Fresh & Authentic</h3>
+                        <p>Delicious homemade meals prepared daily with fresh ingredients and authentic flavors</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3>Fast Delivery</h3>
+                        <p>Your food delivered hot and fresh to your doorstep, quickly and reliably</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3>100% Guaranteed</h3>
+                        <p>Quality meals with careful attention to taste, hygiene, and customer satisfaction</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <h3 style="color: var(--secondary-color); margin-bottom: 1.5rem;">Individual Orders</h3>
+                    <div class="service-item">
+                        <h4>Jumbo Packs</h4>
+                        <p>One jumbo pack contains 2 (two) portions of food.</p>
+                    </div>
+                    <div class="service-item">
+                        <h4>Family Packs</h4>
+                        <p>Ideal for families! It contains 10 (ten) portions of food.</p>
+                    </div>
+                    <div class="service-item">
+                        <h4>Custom Meals</h4>
+                        <p>Choose your preferred protein and sides. Fully customizable to your taste.<br>Feel free to customize any meal you want to your taste/craving. Just tell us exactly how you want it. Example; what you WANT or would NOT want added to the preparation of your meal.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h3 style="color: var(--secondary-color); margin-bottom: 1.5rem;">Special Events</h3>
+                    <div class="service-item">
+                        <h4>Birthday Parties</h4>
+                        <p>Catering for intimate gatherings with variety of meal options and bulk packages.</p>
+                    </div>
+                    <div class="service-item">
+                        <h4>Corporate Events</h4>
+                        <p>Meetings, conferences, and corporate lunches with professional service.</p>
+                    </div>
+                    <div class="service-item">
+                        <h4>House Parties</h4>
+                        <p>Custom catering packages for social events with flexible timing and delivery.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section container">
+        <h2>You Deserve Good Food without the Stress😋😉</h2>
+        <p>Go through our menu and place your order. No Pre-Cooking!! Every Meal is Made Fresh on Demand</p>
+        <a href="/menu" class="btn-cta">Start Ordering</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h5>🍲 Yummy Chow</h5>
+                    <p>Authentic Nigerian meals prepared with love and fresh ingredients.</p>
+                    <p>Abuja, Nigeria</p>
+                </div>
+                <div class="footer-section">
+                    <h5>Quick Links</h5>
+                    <a href="/">Home</a>
+                    <a href="/menu">Menu</a>
+                    <a href="/contact">Contact</a>
+                    <a href="#services">Services</a>
+                </div>
+                <div class="footer-section">
+                    <h5>Get In Touch</h5>
+                    <p><strong>📞+2348142756889</strong></p>
+                    <p>📧okerekefavour456@gmail.com</p>
+                    <p><strong>💌09067837210</strong></p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Kechi's Kitchen. All rights reserved. | Built with ❤️</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

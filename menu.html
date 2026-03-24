@@ -1,0 +1,1974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yummy Chow - Menu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #d4a574;
+            --secondary-color: #2c1810;
+            --accent-color: #ff6b35;
+            --light-bg: #f5f3f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-bg);
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #4a2c1f 100%);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color) !important;
+        }
+
+        .nav-link {
+            color: #fff !important;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #3d251a 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-container {
+            padding: 40px 0;
+        }
+
+        .food-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            width: 100%;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .food-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .food-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--light-bg), #e8dfd6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .food-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        .food-details {
+            padding: 15px;
+            flex-grow: 1;
+        }
+
+        .food-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .food-desc {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .price-row {
+            margin-bottom: 15px;
+        }
+
+        .price-label {
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .price-option {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+        .price-badge {
+            background: var(--primary-color);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .qty-input, .protein-select {
+            width: 100%;
+            padding: 8px 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            transition: border-color 0.3s ease;
+        }
+
+        .qty-input:focus, .protein-select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .add-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: auto;
+        }
+
+        .add-btn:hover {
+            background: #ff5722;
+            transform: scale(1.02);
+        }
+
+        .cart-sidebar {
+            position: sticky;
+            top: 20px;
+        }
+
+        .cart-box {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .cart-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cart-badge {
+            background: var(--accent-color);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 50%;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .cart-items {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+        }
+
+        .cart-item {
+            background: var(--light-bg);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-empty {
+            text-align: center;
+            color: #999;
+            padding: 20px 0;
+        }
+
+        .cart-total {
+            border-top: 2px solid #ddd;
+            padding-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .total-amount {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .checkout-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        footer {
+            background: var(--secondary-color);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .cart-sidebar {
+                position: static;
+                margin-top: 30px;
+            }
+            .price-option {
+                grid-template-columns: 1fr;
+            }
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+            .food-card {
+                margin-bottom: 15px;
+            }
+            .food-details {
+                padding: 15px;
+            }
+            .food-name {
+                font-size: 1rem;
+            }
+            .price-label {
+                font-size: 0.9rem;
+            }
+            .qty-input, .protein-select {
+                padding: 6px 8px;
+                font-size: 0.9rem;
+            }
+            .add-btn {
+                padding: 8px 12px;
+                font-size: 0.85rem;
+            }
+            .cart-box {
+                padding: 15px;
+            }
+            .cart-title {
+                font-size: 1.1rem;
+            }
+            .cart-items {
+                max-height: 300px;
+            }
+            .cart-item {
+                padding: 10px;
+                font-size: 0.85rem;
+            }
+            .total-amount {
+                font-size: 1.2rem;
+            }
+            .checkout-btn {
+                padding: 12px;
+                font-size: 0.95rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .page-header h1 {
+                font-size: 1.5rem;
+            }
+            .page-header p {
+                font-size: 0.9rem !important;
+            }
+            .food-card {
+                margin-bottom: 12px;
+            }
+            .food-image {
+                height: 150px;
+            }
+            .food-name {
+                font-size: 0.95rem;
+            }
+            .food-desc {
+                font-size: 0.8rem;
+            }
+            .price-badge {
+                padding: 4px 8px;
+                font-size: 0.8rem;
+            }
+            .qty-input, .protein-select {
+                padding: 5px 6px;
+                font-size: 0.8rem;
+            }
+            .add-btn {
+                padding: 6px 10px;
+                font-size: 0.75rem;
+            }
+            .cart-badge {
+                font-size: 0.7rem;
+                padding: 1px 5px;
+            }
+        }
+
+        .cart-items::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .cart-items::-webkit-scrollbar-thumb {
+            background: var(--accent-color);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+   <div class="page-header">
+        <div class="container">
+            <h1><b><strong>🥘Yummy Chow</strong></b></h1>
+            <h2>🍽️ Menu</h2>
+            <p style="font-size: 1.1rem; margin: 0;"> Go through our menu, choose protein and quantity, tap 'add' to add to cart <br> Note that: 1 Jumbo Pack contains 2 Portions of food; <br> 1 Family Pack contains 10 Portions.<br><br><i>Place your order now and relax while we cook for you🙂</i></p>
+        </div>
+    </div>
+
+    <div class="container menu-container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="row g-4" id="menuGrid">
+                    <div class="col-6 col-lg-4 menu-item">
+                        <div class="food-card">
+                            <div class="food-image"><img src="/static/images/jollof.jpg" alt=" Jollof rice"></div>
+                            <div class="food-details">
+                                <div class="food-name">Chef's Special Jollof</div>
+                                <div class="food-desc">Aromatic tomato-based rice with savory blend of spices</div>
+                                <div class="price-row">
+                                    <div class="price-label">Jumbo Pack - ₦3,500</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦3,500</div>
+                                        <input type="number" class="qty-input" data-item="jollof_jumbo" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('jollof_jumbo', 'Jollof Rice - Jumbo', 3500)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price-label">Family Pack - ₦15,500</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦15,500</div>
+                                        <input type="number" class="qty-input" data-item="jollof_family" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('jollof_family', 'Jollof Rice- Family', 15500)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row" style="margin-top: 12px;">
+                                    <label class="price-label">Choose Protein:</label>
+                                    <select class="protein-select" id="protein_jollof">
+                                        <option value="">No Preference</option>
+                                        <option value="Chicken">Quarter Chicken - ₦4,600</option>
+                                        <option value="Beef">Beef - ₦1,000</option>
+                                        <option value="Fish">Titus Fish - ₦3,100</option>
+                                        <option value="Turkey">Turkey - ₦6,500</option>
+                                        <option value="beef kebab">Beef Kebab - ₦4,100</option>
+                                        <option value="Cowhead">Cowhead - ₦3,500</option>
+                                        <option value="Goatmeat">Goatmeat - ₦1,800</option>
+                                        <option value="Asun">Asun - ₦5,550</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-4 menu-item">
+                        <div class="food-card">
+                            <div class="food-image"><img src="/static/images/fried.jpg" alt="Fried Rice"></div>
+                            <div class="food-details">
+                                <div class="food-name">Fried Rice</div>
+                                <div class="food-desc">Fluffy rice stir-fried with fresh vegetables</div>
+                                <div class="price-row">
+                                    <div class="price-label">Jumbo Pack - ₦3,300</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦3,300</div>
+                                        <input type="number" class="qty-input" data-item="fried_jumbo" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('fried_jumbo', 'Fried Rice - Jumbo', 3300)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price-label">Family Pack - ₦15,000</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦15,000</div>
+                                        <input type="number" class="qty-input" data-item="fried_family" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('fried_family', 'Fried Rice - Family', 15000)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row" style="margin-top: 12px;">
+                                    <label class="price-label">Choose Protein:</label>
+                                    <select class="protein-select" id="protein_fried">
+                                        <option value="">No Preference</option>
+                                        <option value="Chicken">Quarter Chicken - ₦4,600</option>
+                                        <option value="Beef">Beef - ₦1,000</option>
+                                        <option value="Fish">Titus Fish - ₦3,100</option>
+                                        <option value="Turkey">Turkey - ₦6,500</option>
+                                        <option value="beef kebab">Beef Kebab - ₦4,100</option>
+                                        <option value="Cowhead">Cowhead - ₦3,500</option>
+                                        <option value="Goatmeat">Goatmeat - ₦1,800</option>
+                                        <option value="Asun">Asun - ₦5,550</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 menu-item">
+                        <div class="food-card">
+                            <div class="food-image"><img src="/static/images/salad.jpg" alt="salad"></div>
+                            <div class="food-details">
+                                <div class="food-name">Garden Delight (Salad)</div>
+                                <div class="food-desc">A crip, healthy and refreshing combination of fresh vegetables</div>
+                                <div class="price-row">
+                                    <div class="price-label">One Portion - ₦2,500</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦2,500</div>
+                                        <input type="number" class="qty-input" data-item="salad_one portion" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('salad_one portion', 'salad - one portion', 2500)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row" style="margin-top: 12px;">
+                                    <label class="price-label">Choose Protein:</label>
+                                    <select class="protein-select" id="protein_salad">
+                                        <option value="">No Preference</option>
+                                        <option value="Chicken">Quarter Chicken - ₦4,600</option>
+                                        <option value="Beef">Beef - ₦1,000</option>
+                                        <option value="Fish">Titus Fish - ₦3,100</option>
+                                        <option value="Turkey">Turkey - ₦6,500</option>
+                                        <option value="beef kebab">Beef Kebab - ₦4,100</option>
+                                        <option value="Cowhead">Cowhead - ₦3,500</option>
+                                        <option value="Goatmeat">Goatmeat - ₦1,800</option>
+                                        <option value="Asun">Asun - ₦5,550</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-4 menu-item">
+                        <div class="food-card">
+                            <div class="food-image"><img src="/static/images/chinese.jpg" alt="Basmati Rice"></div>
+                            <div class="food-details">
+                                <div class="food-name">Basmati Rice</div>
+                                <div class="food-desc">Chinese rice with aromatic seasonings and protein garnishing</div>
+                                <div class="price-row">
+                                    <div class="price-label">Jumbo Pack - ₦6,400</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦6,400</div>
+                                        <input type="number" class="qty-input" data-item="basmati_jumbo" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('basmati_jumbo', 'Basmati Rice - Jumbo', 6400)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price-label">Family Pack - ₦30,000</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦30,000</div>
+                                        <input type="number" class="qty-input" data-item="basmati_family" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('basmati_family', 'Basmati Rice- Family', 30000)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row" style="margin-top: 12px;">
+                                    <label class="price-label">Choose Protein:</label>
+                                    <select class="protein-select" id="protein_basmati">
+                                        <option value="">No Preference</option>
+                                        <option value="Chicken">Quarter Chicken - ₦4,600</option>
+                                        <option value="Beef">Beef - ₦1,000</option>
+                                        <option value="Fish">Titus Fish - ₦3,100</option>
+                                        <option value="Turkey">Turkey - ₦6,500</option>
+                                        <option value="beef kebab">Beef Kebab - ₦4,100</option>
+                                        <option value="Cowhead">Cowhead - ₦3,500</option>
+                                        <option value="Goatmeat">Goatmeat - ₦1,800</option>
+                                        <option value="Asun">Asun - ₦5,550</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-lg-4 menu-item">
+                        <div class="food-card">
+                            <div class="food-image"><img src="/static/images/coconut.jpg" alt="Coconut Rice"></div>
+                            <div class="food-details">
+                                <div class="food-name">Coconut Rice</div>
+                                <div class="food-desc">Creamy rice cooked in fresh coconut milk</div>
+                                <div class="price-row">
+                                    <div class="price-label">Jumbo Pack - ₦4,000</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦4,000</div>
+                                        <input type="number" class="qty-input" data-item="coconut_jumbo" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('coconut_jumbo', 'Coconut Rice - Jumbo', 4000)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price-label">Family Pack - ₦18,200</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦18,200</div>
+                                        <input type="number" class="qty-input" data-item="coconut_family" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('coconut_family', 'Coconut Rice - Family', 18200)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row" style="margin-top: 12px;">
+                                    <label class="price-label">Choose Protein:</label>
+                                    <select class="protein-select" id="protein_coconut">
+                                        <option value="">No Preference</option>
+                                        <option value="Chicken">Quarter Chicken - ₦4,600</option>
+                                        <option value="Beef">Beef - ₦1,000</option>
+                                        <option value="Fish">Titus Fish - ₦3,100</option>
+                                        <option value="Turkey">Turkey - ₦6,500</option>
+                                        <option value="beef kebab">Beef Kebab - ₦4,100</option>
+                                        <option value="Cowhead">Cowhead - ₦3,500</option>
+                                        <option value="Goatmeat">Goatmeat - ₦1,800</option>
+                                        <option value="Asun">Asun - ₦5,550</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-lg-4 menu-item">
+                        <div class="food-card">
+                            <div class="food-image"><img src="/static/images/native.jpg" alt="Native Rice"></div>
+                            <div class="food-details">
+                                <div class="food-name">Native Rice</div>
+                                <div class="food-desc">Traditional red oil rice cooked with local seasoning</div>
+                                <div class="price-row">
+                                    <div class="price-label">Jumbo Pack - ₦4,000</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦4,000</div>
+                                        <input type="number" class="qty-input" data-item="native_jumbo" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('native_jumbo', 'Native Rice - Jumbo', 4000)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price-label">Family Pack - ₦18,200</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦18,200</div>
+                                        <input type="number" class="qty-input" data-item="native_family" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('native_family', 'Native Rice - Family', 18200)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row" style="margin-top: 12px;">
+                                    <label class="price-label">Choose Protein:</label>
+                                    <select class="protein-select" id="protein_native">
+                                        <option value="">No Preference</option>
+                                        <option value="Chicken">Quarter Chicken - ₦4,600</option>
+                                        <option value="Beef">Beef - ₦1,000</option>
+                                        <option value="Fish">Titus Fish - ₦3,100</option>
+                                        <option value="Turkey">Turkey - ₦6,500</option>
+                                        <option value="beef kebab">Beef Kebab - ₦4,100</option>
+                                        <option value="Cowhead">Cowhead - ₦3,500</option>
+                                        <option value="Goatmeat">Goatmeat - ₦1,800</option>
+                                        <option value="Asun">Asun - ₦5,550</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-lg-4 menu-item">
+                        <div class="food-card">
+                            <div class="food-image"><img src="/static/images/beefy.jpg" alt="Beefy Rice"></div>
+                            <div class="food-details">
+                                <div class="food-name">Meaty Rice</div>
+                                <div class="food-desc">Chinese rice cooked with tender beef pieces</div>
+                                <div class="price-row">
+                                    <div class="price-label">Jumbo Pack - ₦5,700</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦5,700</div>
+                                        <input type="number" class="qty-input" data-item="meaty rice_jumbo" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('meaty rice_jumbo', 'Meaty Rice - Jumbo', 5700)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price-label">Family Pack - ₦26,300</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦26,300</div>
+                                        <input type="number" class="qty-input" data-item="Meaty Rice_family" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('Meaty Rice_family', 'Meaty Rice - Family', 26300)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row" style="margin-top: 12px;">
+                                    <label class="price-label">Extra Protein:</label>
+                                    <select class="protein-select" id="protein_meaty rice">
+                                        <option value="">No Preference</option>
+                                        <option value="Extra Beef">Extra Beef - ₦1,000</option>
+                                        <option value="Chicken">Quarter Chicken - ₦4,600</option>
+                                        <option value="Beef">Beef - ₦1,000</option>
+                                        <option value="Fish">Titus Fish - ₦3,100</option>
+                                        <option value="Turkey">Turkey - ₦6,500</option>
+                                        <option value="beef kebab">Beef Kebab - ₦4,100</option>
+                                        <option value="Cowhead">Cowhead - ₦3,500</option>
+                                        <option value="Goatmeat">Goatmeat - ₦1,800</option>
+                                        <option value="Asun">Asun - ₦5,550</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-4 menu-item">
+                        <div class="food-card">
+                            <div class="food-image"><img src="/static/images/adalu.jpg" alt="Adalu Rice"></div>
+                            <div class="food-details">
+                                <div class="food-name">Adalu Rice</div>
+                                <div class="food-desc">Jollof  rice & beans</div>
+                                <div class="price-row">
+                                    <div class="price-label">Jumbo Pack - ₦3,600</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦3,600</div>
+                                        <input type="number" class="qty-input" data-item="adalu_jumbo" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('adalu_jumbo', 'Adalu Rice - Jumbo', 3600)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price-label">Family Pack - ₦15,600</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦15,600</div>
+                                        <input type="number" class="qty-input" data-item="adalu_family" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('adalu_family', 'Adalu Rice - Family', 15600)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row" style="margin-top: 12px;">
+                                    <label class="price-label">Choose Protein:</label>
+                                    <select class="protein-select" id="protein_adalu">
+                                        <option value="">No Preference</option>
+                                        <option value="Chicken">Quarter Chicken - ₦4,600</option>
+                                        <option value="Beef">Beef - ₦1,000</option>
+                                        <option value="Fish">Titus Fish - ₦3,100</option>
+                                        <option value="Turkey">Turkey - ₦6,500</option>
+                                        <option value="beef kebab">Beef Kebab - ₦4,100</option>
+                                        <option value="Cowhead">Cowhead - ₦3,500</option>
+                                        <option value="Goatmeat">Goatmeat - ₦1,800</option>
+                                        <option value="Asun">Asun - ₦5,550</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="col-6 col-lg-4 menu-item">
+                        <div class="food-card">
+                            <div class="food-image"><img src="/static/images/white.jpg" alt="White Rice"></div>
+                            <div class="food-details">
+                                <div class="food-name">White Rice</div>
+                                <div class="food-desc">Boiled rice</div>
+                                <div class="price-row">
+                                    <div class="price-label">Jumbo Pack - ₦500</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦500</div>
+                                        <input type="number" class="qty-input" data-item="white_jumbo" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('white_jumbo', 'white Rice - Jumbo', 500)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price-label">Family Pack - ₦2,500</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦2,500</div>
+                                        <input type="number" class="qty-input" data-item="white_family" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('white_family', 'white Rice - Family', 2500)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row" style="margin-top: 12px;">
+                                    <label class="price-label">Choose Protein:</label>
+                                    <select class="protein-select" id="protein_white">
+                                        <option value="">No Preference</option>
+                                        <option value="Chicken">Quarter Chicken - ₦4,600</option>
+                                        <option value="Beef">Beef - ₦1,000</option>
+                                        <option value="Fish">Titus Fish - ₦3,100</option>
+                                        <option value="Turkey">Turkey - ₦6,500</option>
+                                        <option value="beef kebab">Beef Kebab - ₦4,100</option>
+                                        <option value="Cowhead">Cowhead - ₦3,500</option>
+                                        <option value="Goatmeat">Goatmeat - ₦1,800</option>
+                                        <option value="Asun">Asun - ₦5,550</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="col-6 col-lg-4 menu-item">
+                        <div class="food-card">
+                            <div class="food-image"><img src="/static/images/rice & beans.jpg" alt="White Rice & Beans"></div>
+                            <div class="food-details">
+                                <div class="food-name">White Rice & Beans</div>
+                                <div class="food-desc">Boiled rice and beans</div>
+                                <div class="price-row">
+                                    <div class="price-label">Jumbo Pack - ₦900</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦900</div>
+                                        <input type="number" class="qty-input" data-item="rice & beans_jumbo" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('rice & beans_jumbo', 'white rice & beans - Jumbo', 900)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price-label">Family Pack - ₦4,000</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦4,000</div>
+                                        <input type="number" class="qty-input" data-item="rice & beans_family" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('rice & beans_family', 'white rice & beans - Family', 4000)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row" style="margin-top: 12px;">
+                                    <label class="price-label">Choose Protein:</label>
+                                    <select class="protein-select" id="protein_rice & beans">
+                                        <option value="">No Preference</option>
+                                        <option value="Chicken">Quarter Chicken - ₦4,600</option>
+                                        <option value="Beef">Beef - ₦1,000</option>
+                                        <option value="Fish">Titus Fish - ₦3,100</option>
+                                        <option value="Turkey">Turkey - ₦6,500</option>
+                                        <option value="beef kebab">Beef Kebab - ₦4,100</option>
+                                        <option value="Cowhead">Cowhead - ₦3,500</option>
+                                        <option value="Goatmeat">Goatmeat - ₦1,800</option>
+                                        <option value="Asun">Asun - ₦5,550</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="col-6 col-lg-4 menu-item">
+                        <div class="food-card">
+                            <div class="food-image"><img src="/static/images/stew.jpg" alt="stew"></div>
+                            <div class="food-details">
+                                <div class="food-name">Stew</div>
+                                <div class="food-desc">Thick spicy tomato sauce</div>
+                                <div class="price-row">
+                                    <div class="price-label">Jumbo Pack - ₦2,100</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦2,100</div>
+                                        <input type="number" class="qty-input" data-item="stew_jumbo" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('stew_jumbo', 'stew - Jumbo', 2100)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price-label">Family Pack - ₦9,000</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦9,000</div>
+                                        <input type="number" class="qty-input" data-item="stew_family" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('stew_family', 'stew - Family', 9000)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row" style="margin-top: 12px;">
+                                    <label class="price-label">Choose Protein:</label>
+                                    <select class="protein-select" id="protein_stew">
+                                        <option value="">No Preference</option>
+                                        <option value="Chicken">Quarter Chicken - ₦4,600</option>
+                                        <option value="Beef">Beef - ₦1,000</option>
+                                        <option value="Fish">Titus Fish - ₦3,100</option>
+                                        <option value="Turkey">Turkey - ₦6,500</option>
+                                        <option value="beef kebab">Beef Kebab - ₦4,100</option>
+                                        <option value="Cowhead">Cowhead - ₦3,500</option>
+                                        <option value="Goatmeat">Goatmeat - ₦1,800</option>
+                                        <option value="Asun">Asun - ₦5,550</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="col-6 col-lg-4 menu-item">
+                        <div class="food-card">
+                            <div class="food-image"><img src="/static/images/goatmeat.jpg" alt="goatmeat"></div>
+                            <div class="food-details">
+                                <div class="food-name">Goatmeat Pepper Soup</div>
+                                <div class="food-desc">Light, spicy soup made with pieces of goatmeat</div>
+                                <div class="price-row">
+                                    <div class="price-label">Jumbo Pack - ₦4,800</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦4,800</div>
+                                        <input type="number" class="qty-input" data-item="goatmeat_jumbo" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('goatmeat_jumbo', 'Goatmeat PepperSoup- Jumbo', 4800)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price-label">Family Pack - ₦23,000</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦23,000</div>
+                                        <input type="number" class="qty-input" data-item="goatmeat_family" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('goatmeat_family', 'Goatmeat PepperSoup - Family', 23000)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row" style="margin-top: 12px;">
+                                    <label class="price-label">Choose Protein:</label>
+                                    <select class="protein-select" id="protein_goatmeat">
+                                        <option value="">No Preference</option>
+                                        <option value="Chicken">Quarter Chicken - ₦4,600</option>
+                                        <option value="Beef">Beef - ₦1,000</option>
+                                        <option value="Fish">Titus Fish - ₦3,100</option>
+                                        <option value="Turkey">Turkey - ₦6,500</option>
+                                        <option value="beef kebab">Beef Kebab - ₦4,100</option>
+                                        <option value="Cowhead">Cowhead - ₦3,500</option>
+                                        <option value="Goatmeat">Goatmeat - ₦1,800</option>
+                                        <option value="Asun">Asun - ₦5,550</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="col-6 col-lg-4 menu-item">
+                        <div class="food-card">
+                            <div class="food-image"><img src="/static/images/chicken pepper.jpg" alt="Chicken PepperSoup"></div>
+                            <div class="food-details">
+                                <div class="food-name">Chicken Pepper Soup</div>
+                                <div class="food-desc">Light, spicy soup made with pieces of chicken</div>
+                                <div class="price-row">
+                                    <div class="price-label">Jumbo Pack - ₦5,100</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦5,100</div>
+                                        <input type="number" class="qty-input" data-item="chicken pepper_jumbo" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('chicken pepper_jumbo', 'chicken peppersoup - Jumbo', 5100)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price-label">Family Pack - ₦25,000</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦25,000</div>
+                                        <input type="number" class="qty-input" data-item="chicken pepper_family" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('chicken pepper_family', 'chicken pepper soup- Family', 25000)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row" style="margin-top: 12px;">
+                                    <label class="price-label">Choose Protein:</label>
+                                    <select class="protein-select" id="protein_chicken pepper">
+                                        <option value="">No Preference</option>
+                                        <option value="Chicken">Quarter Chicken - ₦4,600</option>
+                                        <option value="Beef">Beef - ₦1,000</option>
+                                        <option value="Fish">Titus Fish - ₦3,100</option>
+                                        <option value="Turkey">Turkey - ₦6,500</option>
+                                        <option value="beef kebab">Beef Kebab - ₦4,100</option>
+                                        <option value="Cowhead">Cowhead - ₦3,500</option>
+                                        <option value="Goatmeat">Goatmeat - ₦1,800</option>
+                                        <option value="Asun">Asun - ₦5,550</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="col-6 col-lg-4 menu-item">
+                        <div class="food-card">
+                            <div class="food-image"><img src="/static/images/pasta.jpg" alt="pasta"></div>
+                            <div class="food-details">
+                                <div class="food-name">Pasta</div>
+                                <div class="food-desc">Stir-fry pasta with fresh vegetables</div>
+                                <div class="price-row">
+                                    <div class="price-label">Jumbo Pack - ₦4,800</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦4,800</div>
+                                        <input type="number" class="qty-input" data-item="pasta_jumbo" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('pasta_jumbo',  'pasta-jumbo', 4800)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price-label">Family Pack - ₦22,000</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦22,000</div>
+                                        <input type="number" class="qty-input" data-item="pasta_family" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('pasta_family', 'pasta - Family', 22000)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row" style="margin-top: 12px;">
+                                    <label class="price-label">Choose Protein:</label>
+                                    <select class="protein-select" id="protein_pasta">
+                                        <option value="">No Preference</option>
+                                        <option value="Chicken">Quarter Chicken - ₦4,600</option>
+                                        <option value="Beef">Beef - ₦1,000</option>
+                                        <option value="Fish">Titus Fish - ₦3,100</option>
+                                        <option value="Turkey">Turkey - ₦6,500</option>
+                                        <option value="beef kebab">Beef Kebab - ₦4,100</option>
+                                        <option value="Cowhead">Cowhead - ₦3,500</option>
+                                        <option value="Goatmeat">Goatmeat - ₦1,800</option>
+                                        <option value="Asun">Asun - ₦5,550</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="col-6 col-lg-4 menu-item">
+                <div class="food-card">
+                            <div class="food-image"><img src="/static/images/asian.jpg" alt="Asian pasta"></div>
+                            <div class="food-details">
+                                <div class="food-name">Asian Pasta</div>
+                                <div class="food-desc">Pasta prepared with Asian sauces and spices, stirr-fried with uniquely cut vegetables</div>
+                                <div class="price-row">
+                                    <div class="price-label">Jumbo Pack - ₦5,600</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦5,600</div>
+                                        <input type="number" class="qty-input" data-item="asian_jumbo" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('asian_jumbo', 'Asian pasta- Jumbo', 5600)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price-label">Family Pack - ₦26,000</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦26,000</div>
+                                        <input type="number" class="qty-input" data-item="asian_family" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('asian_family', 'Asian pasta - Family', 26000)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row" style="margin-top: 12px;">
+                                    <label class="price-label">Choose Protein:</label>
+                                    <select class="protein-select" id="protein_asian">
+                                        <option value="">No Preference</option>
+                                        <option value="Chicken">Quarter Chicken - ₦4,600</option>
+                                        <option value="Beef">Beef - ₦1,000</option>
+                                        <option value="Fish">Titus Fish - ₦3,100</option>
+                                        <option value="Turkey">Turkey - ₦6,500</option>
+                                        <option value="beef kebab">Beef Kebab - ₦4,100</option>
+                                        <option value="Cowhead">Cowhead - ₦3,500</option>
+                                        <option value="Goatmeat">Goatmeat - ₦1,800</option>
+                                        <option value="Asun">Asun - ₦5,550</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                 <div class="col-6 col-lg-4 menu-item">
+                        <div class="food-card">
+                            <div class="food-image"><img src="/static/images/catfish.jpg" alt="catfish"></div>
+                            <div class="food-details">
+                                <div class="food-name">Catfish Sauce</div>
+                                <div class="food-desc">A rich savoury sauce made with Catfish and traditional spices</div>
+                                <div class="price-row">
+                                    <div class="price-label">Jumbo Pack - ₦10,000</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦10,000</div>
+                                        <input type="number" class="qty-input" data-item="catfish_jumbo" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('catfish_jumbo', 'Catfish sauce - Jumbo', 10000)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price-label">Family Pack - ₦48,000</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦48,000</div>
+                                        <input type="number" class="qty-input" data-item="catfish_family" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('catfish_family', 'catfish sauce - Family', 48000)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row" style="margin-top: 12px;">
+                                    <label class="price-label">Choose Protein:</label>
+                                    <select class="protein-select" id="protein_catfish">
+                                        <option value="">No Preference</option>
+                                        <option value="Chicken">Quarter Chicken - ₦4,600</option>
+                                        <option value="Beef">Beef - ₦1,000</option>
+                                        <option value="Fish">Titus Fish - ₦3,100</option>
+                                        <option value="Turkey">Turkey - ₦6,500</option>
+                                        <option value="beef kebab">Beef Kebab - ₦4,100</option>
+                                        <option value="Cowhead">Cowhead - ₦3,500</option>
+                                        <option value="Goatmeat">Goatmeat - ₦1,800</option>
+                                        <option value="Asun">Asun - ₦5,550</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                 </div>
+                  <div class="col-6 col-lg-4 menu-item">
+                        <div class="food-card">
+                            <div class="food-image"><img src="/static/images/ukazi.jpg" alt="Ukazi Soup"></div>
+                            <div class="food-details">
+                                <div class="food-name">Ukazi Soup</div>
+                                <div class="food-desc">A rich traditional soup made with ukazi(wild spinach leaves) and thickened with local ingredients for a deep earthly flavour</div>
+                                <div class="price-row">
+                                    <div class="price-label">Jumbo Pack - ₦4,800</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦4,800</div>
+                                        <input type="number" class="qty-input" data-item="ukazi_jumbo" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('ukazi_jumbo', 'Ukazi Soup - Jumbo', 4800)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price-label">Family Pack - ₦24,500</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦24,500</div>
+                                        <input type="number" class="qty-input" data-item="ukazi_family" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('ukazi_family', 'Ukazi Soup- Family', 24500)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row" style="margin-top: 12px;">
+                                    <label class="price-label">Choose Protein:</label>
+                                    <select class="protein-select" id="protein_ukazi">
+                                        <option value="">No Preference</option>
+                                        <option value="Chicken">Quarter Chicken - ₦4,600</option>
+                                        <option value="Beef">Beef - ₦1,000</option>
+                                        <option value="Fish">Titus Fish - ₦3,100</option>
+                                        <option value="Turkey">Turkey - ₦6,500</option>
+                                        <option value="beef kebab">Beef Kebab - ₦4,100</option>
+                                        <option value="Cowhead">Cowhead - ₦3,500</option>
+                                        <option value="Goatmeat">Goatmeat - ₦1,800</option>
+                                        <option value="Asun">Asun - ₦5,550</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                  </div>
+                   <div class="col-6 col-lg-4 menu-item">
+                        <div class="food-card">
+                            <div class="food-image"><img src="/static/images/edik.jpg" alt="Edikaikong"></div>
+                            <div class="food-details">
+                                <div class="food-name">Edikaikong Soup</div>
+                                <div class="food-desc">Nutritious vegetable soup</div>
+                                <div class="price-row">
+                                    <div class="price-label">Jumbo Pack - ₦4,300</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦4,300</div>
+                                        <input type="number" class="qty-input" data-item="edik_jumbo" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('edik_jumbo', 'Edikaikong Soup- Jumbo', 4300)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price-label">Family Pack - ₦21,000</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦21,000</div>
+                                        <input type="number" class="qty-input" data-item="edik_family" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('edik_family', 'Edikaikong Soup - Family', 21000)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row" style="margin-top: 12px;">
+                                    <label class="price-label">Choose Protein:</label>
+                                    <select class="protein-select" id="protein_edik">
+                                        <option value="">No Preference</option>
+                                        <option value="Chicken">Quarter Chicken - ₦4,600</option>
+                                        <option value="Beef">Beef - ₦1,000</option>
+                                        <option value="Fish">Titus Fish - ₦3,100</option>
+                                        <option value="Turkey">Turkey - ₦6,500</option>
+                                        <option value="beef kebab">Beef Kebab - ₦4,100</option>
+                                        <option value="Cowhead">Cowhead - ₦3,500</option>
+                                        <option value="Goatmeat">Goatmeat - ₦1,800</option>
+                                        <option value="Asun">Asun - ₦5,550</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                   </div>
+                    <div class="col-6 col-lg-4 menu-item">
+                        <div class="food-card">
+                            <div class="food-image"><img src="/static/images/afang.jpg" alt="Afang Soup"></div>
+                            <div class="food-details">
+                                <div class="food-name">Afang Soup</div>
+                                <div class="food-desc">Rich flavorful soup prepared with afang and waterleaf</div>
+                                <div class="price-row">
+                                    <div class="price-label">Jumbo Pack - ₦6,300</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦6,300</div>
+                                        <input type="number" class="qty-input" data-item="afang_jumbo" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('afang_jumbo', 'Afang Soup - Jumbo', 6300)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price-label">Family Pack - ₦28,500</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦28,500</div>
+                                        <input type="number" class="qty-input" data-item="afang_family" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('afang_family', 'Afang Soup - Family', 28500)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row" style="margin-top: 12px;">
+                                    <label class="price-label">Choose Protein:</label>
+                                    <select class="protein-select" id="protein_afang">
+                                        <option value="">No Preference</option>
+                                        <option value="Chicken">Quarter Chicken - ₦4,600</option>
+                                        <option value="Beef">Beef - ₦1,000</option>
+                                        <option value="Fish">Titus Fish - ₦3,100</option>
+                                        <option value="Turkey">Turkey - ₦6,500</option>
+                                        <option value="beef kebab">Beef Kebab - ₦4,100</option>
+                                        <option value="Cowhead">Cowhead - ₦3,500</option>
+                                        <option value="Goatmeat">Goatmeat - ₦1,800</option>
+                                        <option value="Asun">Asun - ₦5,550</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="col-6 col-lg-4 menu-item">
+                        <div class="food-card">
+                            <div class="food-image"><img src="/static/images/oha.jpg" alt="oha soup"></div>
+                            <div class="food-details">
+                                <div class="food-name">Oha Soup</div>
+                                <div class="food-desc">Delicious traditional soup made with fresh oha leaf</div>
+                                <div class="price-row">
+                                    <div class="price-label">Jumbo Pack - ₦4,000</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦4,000</div>
+                                        <input type="number" class="qty-input" data-item="oha_jumbo" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('oha_jumbo', 'Oha soup - Jumbo', 4000)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price-label">Family Pack - ₦19,500</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦19,500</div>
+                                        <input type="number" class="qty-input" data-item="oha_family" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('oha_family', 'Oha Soup - Family', 19500)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row" style="margin-top: 12px;">
+                                    <label class="price-label">Choose Protein:</label>
+                                    <select class="protein-select" id="protein_oha">
+                                        <option value="">No Preference</option>
+                                        <option value="Chicken">Quarter Chicken - ₦4,600</option>
+                                        <option value="Beef">Beef - ₦1,000</option>
+                                        <option value="Fish">Titus Fish - ₦3,100</option>
+                                        <option value="Turkey">Turkey - ₦6,500</option>
+                                        <option value="beef kebab">Beef Kebab - ₦4,100</option>
+                                        <option value="Cowhead">Cowhead - ₦3,500</option>
+                                        <option value="Goatmeat">Goatmeat - ₦1,800</option>
+                                        <option value="Asun">Asun - ₦5,550</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                     </div>
+                      <div class="col-6 col-lg-4 menu-item">
+                        <div class="food-card">
+                            <div class="food-image"><img src="/static/images/egusi.jpg" alt="Egusi Soup"></div>
+                            <div class="food-details">
+                                <div class="food-name">Egusi Soup</div>
+                                <div class="food-desc">Delicious and hearty soup made from ground melon seeds</div>
+                                <div class="price-row">
+                                    <div class="price-label">Jumbo Pack - ₦4,200</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦4,200</div>
+                                        <input type="number" class="qty-input" data-item="egusi_jumbo", value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('egusi_jumbo', 'Egusi Soup - Jumbo', 4200)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price-label">Family Pack - ₦20,800</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦20,800</div>
+                                        <input type="number" class="qty-input" data-item="egusi_family" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('egusi_family', 'Egusi Soup - Family', 20800)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row" style="margin-top: 12px;">
+                                    <label class="price-label">Choose Protein:</label>
+                                    <select class="protein-select" id="protein_egusi">
+                                        <option value="">No Preference</option>
+                                        <option value="Chicken">Quarter Chicken - ₦4,600</option>
+                                        <option value="Beef">Beef - ₦1,000</option>
+                                        <option value="Fish">Titus Fish - ₦3,100</option>
+                                        <option value="Turkey">Turkey - ₦6,500</option>
+                                        <option value="beef kebab">Beef Kebab - ₦4,100</option>
+                                        <option value="Cowhead">Cowhead - ₦3,500</option>
+                                        <option value="Goatmeat">Goatmeat - ₦1,800</option>
+                                        <option value="Asun">Asun - ₦5,550</option>
+                                    </select>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="col-6 col-lg-4 menu-item">
+                        <div class="food-card">
+                            <div class="food-image"><img src="/static/images/okro.jpg" alt="okro soup"></div>
+                            <div class="food-details">
+                                <div class="food-name">Okro Soup</div>
+                                <div class="food-desc">Draw soup (smooth, slimy and stretchy)</div>
+                                <div class="price-row">
+                                    <div class="price-label">Jumbo Pack - ₦5,000</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦5,000</div>
+                                        <input type="number" class="qty-input" data-item="okro_jumbo" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('okro_jumbo', 'Okro Soup - Jumbo', 5000)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price-label">Family Pack - ₦25,000</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦25,000</div>
+                                        <input type="number" class="qty-input" data-item="okro_family" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('okro_family', 'Okro Soup - Family', 25000)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row" style="margin-top: 12px;">
+                                    <label class="price-label">Choose Protein:</label>
+                                    <select class="protein-select" id="protein_okro">
+                                        <option value="">No Preference</option>
+                                        <option value="Chicken">Quarter Chicken - ₦4,600</option>
+                                        <option value="Beef">Beef - ₦1,000</option>
+                                        <option value="Fish">Titus Fish - ₦3,100</option>
+                                        <option value="Turkey">Turkey - ₦6,500</option>
+                                        <option value="beef kebab">Beef Kebab - ₦4,100</option>
+                                        <option value="Cowhead">Cowhead - ₦3,500</option>
+                                        <option value="Goatmeat">Goatmeat - ₦1,800</option>
+                                        <option value="Asun">Asun - ₦5,550</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                     </div>
+                      <div class="col-6 col-lg-4 menu-item">
+                        <div class="food-card">
+                            <div class="food-image"><img src="/static/images/ogbono.jpg" alt="ogbono soup"></div>
+                            <div class="food-details">
+                                <div class="food-name">Ogbono Soup</div>
+                                <div class="food-desc">Smooth and slimy soup made from ground ogbono seeds</div>
+                                <div class="price-row">
+                                    <div class="price-label">Jumbo Pack - ₦5,500</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦5,500</div>
+                                        <input type="number" class="qty-input" data-item="ogbono_jumbo" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('ogbono_jumbo', 'ogbono soup - Jumbo', 5500)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price-label">Family Pack - ₦27,000</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦27,000</div>
+                                        <input type="number" class="qty-input" data-item="ogbono_family" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('ogbono_family', 'ogbono soup - Family', 27000)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row" style="margin-top: 12px;">
+                                    <label class="price-label">Choose Protein:</label>
+                                    <select class="protein-select" id="protein_ogbono">
+                                        <option value="">No Preference</option>
+                                        <option value="Chicken">Quarter Chicken - ₦4,600</option>
+                                        <option value="Beef">Beef - ₦1,000</option>
+                                        <option value="Fish">Titus Fish - ₦3,100</option>
+                                        <option value="Turkey">Turkey - ₦6,500</option>
+                                        <option value="beef kebab">Beef Kebab - ₦4,100</option>
+                                        <option value="Cowhead">Cowhead - ₦3,500</option>
+                                        <option value="Goatmeat">Goatmeat - ₦1,800</option>
+                                        <option value="Asun">Asun - ₦5,550</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                       <div class="col-6 col-lg-4 menu-item">
+                        <div class="food-card">
+                            <div class="food-image"><img src="/static/images/fisherman.jpg" alt="Fisherman Soup"></div>
+                            <div class="food-details">
+                                <div class="food-name">Fisherman Soup</div>
+                                <div class="food-desc">Rich soup packed with fresh fish, prawns, crab, and other seafoods</div>
+                                <div class="price-row">
+                                    <div class="price-label">Jumbo Pack - ₦15,000</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦15,000</div>
+                                        <input type="number" class="qty-input" data-item="fisherman_jumbo" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('fisherman_jumbo', 'Fisherman soup - Jumbo', 15000)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price-label">Family Pack - ₦71,000</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦71,000</div>
+                                        <input type="number" class="qty-input" data-item="fisherman_family" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('fisherman_family', 'Fisherman Soup- Family', 71000)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row" style="margin-top: 12px;">
+                                    <label class="price-label">Choose Protein:</label>
+                                    <select class="protein-select" id="protein_fisherman">
+                                        <option value="">No Preference</option>
+                                        <option value="Chicken">Quarter Chicken - ₦4,600</option>
+                                        <option value="Beef">Beef - ₦1,000</option>
+                                        <option value="Fish">Titus Fish - ₦3,100</option>
+                                        <option value="Turkey">Turkey - ₦6,500</option>
+                                        <option value="beef kebab">Beef Kebab - ₦4,100</option>
+                                        <option value="Cowhead">Cowhead - ₦3,500</option>
+                                        <option value="Goatmeat">Goatmeat - ₦1,800</option>
+                                        <option value="Asun">Asun - ₦5,550</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                       </div>
+                       <div class="col-6 col-lg-4 menu-item">
+                        <div class="food-card">
+                            <div class="food-image"><img src="/static/images/wheat.jpg" alt="wheat"></div>
+                            <div class="food-details">
+                                <div class="food-name">Wheat</div>
+                                <div class="food-desc">A soft and nutritious swallow made from whole wheat flour</div>
+                                <div class="price-row">
+                                    <div class="price-label">One Portion - ₦900</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦900</div>
+                                        <input type="number" class="qty-input" data-item="wheat_one portion" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('wheat_one portion', 'wheat - one portion', 900)">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                         </div>
+                    </div>
+                                <div class="col-6 col-lg-4 menu-item">
+                        <div class="food-card">
+                            <div class="food-image"><img src="/static/images/garri.jpg" alt="Garri"></div>
+                            <div class="food-details">
+                                <div class="food-name">Garri (Eba)</div>
+                                <div class="food-desc">A smooth and satisfying swallow made from Cassava flakes</div>
+                                <div class="price-row">
+                                    <div class="price-label">One Portion - ₦500</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦500</div>
+                                        <input type="number" class="qty-input" data-item="Garri_one portion" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('Garri_one portion', 'Garri - one portion', 500)">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+                 <div class="col-6 col-lg-4 menu-item">
+                        <div class="food-card">
+                            <div class="food-image"><img src="/static/images/semo.jpg" alt="semo"></div>
+                            <div class="food-details">
+                                <div class="food-name">Semo</div>
+                                <div class="food-desc">A light and stretchy swallow made from semolina flour</div>
+                                <div class="price-row">
+                                    <div class="price-label">One Portion - ₦1000</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦1000</div>
+                                        <input type="number" class="qty-input" data-item="semo_one portion" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('semo_one portion', 'semo - one portion', 1000)">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="col-6 col-lg-4 menu-item">
+                        <div class="food-card">
+                            <div class="food-image"><img src="/static/images/plantain.jpg" alt="plantain"></div>
+                            <div class="food-details">
+                                <div class="food-name">Porridge Plantain</div>
+                                <div class="food-desc">Unripe plantain porridge</div>
+                                <div class="price-row">
+                                    <div class="price-label">Jumbo Pack - ₦6,200</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦6,200</div>
+                                        <input type="number" class="qty-input" data-item="plantain_jumbo" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('plantain_jumbo', ' porridge plantain - Jumbo', 6200)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price-label">Family Pack - ₦29,000</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦29,000</div>
+                                        <input type="number" class="qty-input" data-item="plantain_family" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('plantain_family', ' porridge plantain - Family', 29000)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row" style="margin-top: 12px;">
+                                    <label class="price-label">Choose Protein:</label>
+                                    <select class="protein-select" id="protein_plantain">
+                                        <option value="">No Preference</option>
+                                        <option value="Chicken">Quarter Chicken - ₦4,600</option>
+                                        <option value="Beef">Beef - ₦1,000</option>
+                                        <option value="Fish">Titus Fish - ₦3,100</option>
+                                        <option value="Turkey">Turkey - ₦6,500</option>
+                                        <option value="beef kebab">Beef Kebab - ₦4,100</option>
+                                        <option value="Cowhead">Cowhead - ₦3,500</option>
+                                        <option value="Goatmeat">Goatmeat - ₦1,800</option>
+                                        <option value="Asun">Asun - ₦5,550</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                         <div class="col-6 col-lg-4 menu-item">
+                        <div class="food-card">
+                            <div class="food-image"><img src="/static/images/beans.jpg" alt="beans"></div>
+                            <div class="food-details">
+                                <div class="food-name">Porridge Beans</div>
+                                <div class="food-desc">Soft, nutritious, porridge filled</div>
+                                <div class="price-row">
+                                    <div class="price-label">Jumbo Pack - ₦4,200</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦4,200</div>
+                                        <input type="number" class="qty-input" data-item="beans_jumbo" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('beans_jumbo', 'porridge beans - Jumbo', 4200)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price-label">Family Pack - ₦18,200</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦18,200</div>
+                                        <input type="number" class="qty-input" data-item="beans_family" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('beans_family', 'porridge beans - Family', 18200)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row" style="margin-top: 12px;">
+                                    <label class="price-label">Choose Protein:</label>
+                                    <select class="protein-select" id="protein_beans">
+                                        <option value="">No Preference</option>
+                                        <option value="Chicken">Quarter Chicken - ₦4,600</option>
+                                        <option value="Beef">Beef - ₦1,000</option>
+                                        <option value="Fish">Titus Fish - ₦3,100</option>
+                                        <option value="Turkey">Turkey - ₦6,500</option>
+                                        <option value="beef kebab">Beef Kebab - ₦4,100</option>
+                                        <option value="Cowhead">Cowhead - ₦3,500</option>
+                                        <option value="Goatmeat">Goatmeat - ₦1,800</option>
+                                        <option value="Asun">Asun - ₦5,550</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                         <div class="col-6 col-lg-4 menu-item">
+                        <div class="food-card">
+                            <div class="food-image"><img src="/static/images/yam.jpg" alt="porridge yam"></div>
+                            <div class="food-details">
+                                <div class="food-name">Porridge Yam</div>
+                                <div class="food-desc">Soft and savoury, garnished with vegetable leaf</div>
+                                <div class="price-row">
+                                    <div class="price-label">Jumbo Pack - ₦5,000</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦5,000</div>
+                                        <input type="number" class="qty-input" data-item="yam_jumbo" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('yam_jumbo', 'porridge yam - Jumbo', 5000)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price-label">Family Pack - ₦25,000</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦25,000</div>
+                                        <input type="number" class="qty-input" data-item="yam_family" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('yam_family', 'porridge yam - Family', 25000)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row" style="margin-top: 12px;">
+                                    <label class="price-label">Choose Protein:</label>
+                                    <select class="protein-select" id="protein_yam">
+                                        <option value="">No Preference</option>
+                                        <option value="Chicken">Quarter Chicken - ₦4,600</option>
+                                        <option value="Beef">Beef - ₦1,000</option>
+                                        <option value="Fish">Titus Fish - ₦3,100</option>
+                                        <option value="Turkey">Turkey - ₦6,500</option>
+                                        <option value="beef kebab">Beef Kebab - ₦4,100</option>
+                                        <option value="Cowhead">Cowhead - ₦3,500</option>
+                                        <option value="Goatmeat">Goatmeat - ₦1,800</option>
+                                        <option value="Asun">Asun - ₦5,550</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                         <div class="col-6 col-lg-4 menu-item">
+                        <div class="food-card">
+                            <div class="food-image"><img src="/static/images/moi-moi.jpg" alt="moi-moi"></div>
+                            <div class="food-details">
+                                <div class="food-name">Moi-Moi</div>
+                                <div class="food-desc">Rich in protein, smooth in texture, and contains full egg</div>
+                                <div class="price-row">
+                                    <div class="price-label"> medium bowl - ₦2,300</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦2,300</div>
+                                        <input type="number" class="qty-input" data-item="moi-moi_jumbo" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('moi-moi_jumbo', 'moi-moi - Jumbo', 2300)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row" style="margin-top: 12px;">
+                                    <label class="price-label">Choose Protein:</label>
+                                    <select class="protein-select" id="protein_moi-moi">
+                                        <option value="">No Preference</option>
+                                        <option value="Chicken">Quarter Chicken - ₦4,600</option>
+                                        <option value="Beef">Beef - ₦1,000</option>
+                                        <option value="Fish">Titus Fish - ₦3,100</option>
+                                        <option value="Turkey">Turkey - ₦6,500</option>
+                                        <option value="beef kebab">Beef Kebab - ₦4,100</option>
+                                        <option value="Cowhead">Cowhead - ₦3,500</option>
+                                        <option value="Goatmeat">Goatmeat - ₦1,800</option>
+                                        <option value="Asun">Asun - ₦5,550</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                         <div class="col-6 col-lg-4 menu-item">
+                        <div class="food-card">
+                            <div class="food-image"><img src="/static/images/boiled yam.jpg" alt="boiled yam"></div>
+                            <div class="food-details">
+                                <div class="food-name">Boiled Yam</div>
+                                <div class="food-desc">Circle-sliced boiled yam</div>
+                                <div class="price-row">
+                                    <div class="price-label">Jumbo Pack - ₦2,000</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦2,000</div>
+                                        <input type="number" class="qty-input" data-item="boiled yam_jumbo" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('boiled yam_jumbo', 'boiled yam - Jumbo', 2000)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price-label">Family Pack - ₦10,000</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦10,000</div>
+                                        <input type="number" class="qty-input" data-item="boiled yam_family" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('boiled yam_family', 'boiled yam - Family', 10000)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row" style="margin-top: 12px;">
+                                    <label class="price-label">Choose Protein:</label>
+                                    <select class="protein-select" id="protein_boiled yam">
+                                        <option value="">No Preference</option>
+                                        <option value="Chicken">Quarter Chicken - ₦4,600</option>
+                                        <option value="Beef">Beef - ₦1,000</option>
+                                        <option value="Fish">Titus Fish - ₦3,100</option>
+                                        <option value="Turkey">Turkey - ₦6,500</option>
+                                        <option value="beef kebab">Beef Kebab - ₦4,100</option>
+                                        <option value="Cowhead">Cowhead - ₦3,500</option>
+                                        <option value="Goatmeat">Goatmeat - ₦1,800</option>
+                                        <option value="Asun">Asun - ₦5,550</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-4 menu-item">
+                    <div class="food-card">
+                            <div class="food-image"><img src="/static/images/egg.jpg" alt="Egg Sauce"></div>
+                            <div class="food-details">
+                                <div class="food-name">Egg Sauce</div>
+                                <div class="food-desc">Tasty sauce made with scrambled eggs</div>
+                                <div class="price-row">
+                                    <div class="price-label">Jumbo Pack - ₦3,700</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦3,700</div>
+                                        <input type="number" class="qty-input" data-item="egg_jumbo" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('egg_jumbo', 'Egg Sauce- Jumbo', 3700)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price-label">Family Pack - ₦15,800</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦15,800</div>
+                                        <input type="number" class="qty-input" data-item="egg_family" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('egg_family', 'Egg Sauce - Family', 15800)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row" style="margin-top: 12px;">
+                                    <label class="price-label">Choose Protein:</label>
+                                    <select class="protein-select" id="protein_egg">
+                                        <option value="">No Preference</option>
+                                        <option value="Chicken">Quarter Chicken - ₦4,600</option>
+                                        <option value="Beef">Beef - ₦1,000</option>
+                                        <option value="Fish">Titus Fish - ₦3,100</option>
+                                        <option value="Turkey">Turkey - ₦6,500</option>
+                                        <option value="beef kebab">Beef Kebab - ₦4,100</option>
+                                        <option value="Cowhead">Cowhead - ₦3,500</option>
+                                        <option value="Goatmeat">Goatmeat - ₦1,800</option>
+                                        <option value="Asun">Asun - ₦5,550</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-4 menu-item">
+                     <div class="food-card">
+                            <div class="food-image"><img src="/static/images/croquettes.jpg" alt="croquettes"></div>
+                            <div class="food-details">
+                               <div class="food-name">Yam Croquettes</div>
+                                <div class="food-desc">Soft fried yam coated with egg</div>
+                                <div class="price-row">
+                                    <div class="price-label">Jumbo Pack - ₦4,300</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦4,300</div>
+                                        <input type="number" class="qty-input" data-item="croquettes_jumbo" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('croquettes_jumbo', 'yam croquettes - Jumbo', 4300)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price-label">Family Pack - ₦19,100</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦19,100</div>
+                                        <input type="number" class="qty-input" data-item="croquettes_family" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('croquettes_family', 'yam croquettes - Family', 19100)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row" style="margin-top: 12px;">
+                                    <label class="price-label">Choose Protein:</label>
+                                    <select class="protein-select" id="protein_croquettes">
+                                        <option value="">No Preference</option>
+                                        <option value="Chicken">Quarter Chicken - ₦4,600</option>
+                                        <option value="Beef">Beef - ₦1,000</option>
+                                        <option value="Fish">Titus Fish - ₦3,100</option>
+                                        <option value="Turkey">Turkey - ₦6,500</option>
+                                        <option value="beef kebab">Beef Kebab - ₦4,100</option>
+                                        <option value="Cowhead">Cowhead - ₦3,500</option>
+                                        <option value="Goatmeat">Goatmeat - ₦1,800</option>
+                                        <option value="Asun">Asun - ₦5,550</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    
+                   <div class="col-6 col-lg-4 menu-item">
+                    <div class="food-card">
+                            <div class="food-image"><img src="/static/images/potatoes.jpg" alt="potatoes"></div>
+                            <div class="food-details">
+                                <div class="food-name">Fried Potatoes</div>
+                                <div class="food-desc">Seasoned and fried. Soft and crispy</div>
+                                <div class="price-row">
+                                    <div class="price-label">Jumbo Pack - ₦2,500</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦2,500</div>
+                                        <input type="number" class="qty-input" data-item="potatoes_jumbo" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('potatoes_jumbo', 'Fried potatoes - Jumbo', 2500)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row">
+                                    <div class="price-label">Family Pack - ₦11,500</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦11,500</div>
+                                        <input type="number" class="qty-input" data-item="potatoes_family" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('potatoes_family', 'Fried potatoes - Family', 11500)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row" style="margin-top: 12px;">
+                                    <label class="price-label">Choose Protein:</label>
+                                    <select class="protein-select" id="protein_potatoes">
+                                        <option value="">No Preference</option>
+                                        <option value="Chicken">Quarter Chicken - ₦4,600</option>
+                                        <option value="Beef">Beef - ₦1,000</option>
+                                        <option value="Fish">Titus Fish - ₦3,100</option>
+                                        <option value="Turkey">Turkey - ₦6,500</option>
+                                        <option value="beef kebab">Beef Kebab - ₦4,100</option>
+                                        <option value="Cowhead">Cowhead - ₦3,500</option>
+                                        <option value="Goatmeat">Goatmeat - ₦1,800</option>
+                                        <option value="Asun">Asun - ₦5,550</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-4 menu-item">
+                    <div class="food-card">
+                            <div class="food-image"><img src="/static/images/dodo.jpg" alt="Dodo"></div>
+                            <div class="food-details">
+                                <div class="food-name">Dodo</div>
+                                <div class="food-desc">Fried ripe plantain</div>
+                                <div class="price-row">
+                                    <div class="price-label">One Portion - ₦1,500</div>
+                                    <div class="price-option">
+                                        <div class="price-badge">₦1,500</div>
+                                        <input type="number" class="qty-input" data-item="dodo_one portion" value="1" min="1">
+                                        <button class="add-btn" onclick="addToCart('dodo_one portion', 'dodo - one portion', 1500)">Add</button>
+                                    </div>
+                                </div>
+                                <div class="price-row" style="margin-top: 12px;">
+                                    <label class="price-label">Choose Protein:</label>
+                                    <select class="protein-select" id="protein_dodo">
+                                        <option value="">No Preference</option>
+                                        <option value="Chicken">Quarter Chicken - ₦4,600</option>
+                                        <option value="Beef">Beef - ₦1,000</option>
+                                        <option value="Fish">Titus Fish - ₦3,100</option>
+                                        <option value="Turkey">Turkey - ₦6,500</option>
+                                        <option value="beef kebab">Beef Kebab - ₦4,100</option>
+                                        <option value="Cowhead">Cowhead - ₦3,500</option>
+                                        <option value="Goatmeat">Goatmeat - ₦1,800</option>
+                                        <option value="Asun">Asun - ₦5,550</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        
+
+            <div class="col-lg-4">
+                <div class="cart-sidebar">
+                    <div class="cart-box">
+                        <div class="cart-title">
+                            <i class="fas fa-shopping-cart"></i> Your Cart
+                            <span class="cart-badge" id="cartCount">0</span>
+                        </div>
+                        <div class="cart-items" id="cartItems">
+                            <div class="cart-empty">Your cart is empty</div>
+                        </div>
+                        <div class="cart-total">
+                            <div class="total-row">
+                                <span>Subtotal:</span>
+                                <span id="subtotal">₦0</span>
+                            </div>
+                            <div class="total-row">
+                                <span>Delivery fee depends on your location</span>
+                            </div>
+                            <div class="total-row" style="border-top: 1px solid #ddd; padding-top: 10px; margin-top: 10px; font-size: 1.2rem;">
+                                <span>Total:</span>
+                                <span class="total-amount" id="totalAmount">₦0</span>
+                            </div>
+                        </div>
+                        <button class="checkout-btn" id="checkoutBtn" onclick="checkout()" disabled>
+                            Proceed to Checkout →
+                        </button>
+                        <div style="text-align: center; margin-top: 15px; font-size: 0.9rem; color: #999;">
+                            Orders sent via WhatsApp
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 yummy chow. All rights reserved. |  +234 906 783 7210</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Protein pricing data
+        const proteinPricing = {
+            "Chicken": 4600,
+            "Beef": 1000,
+            "Fish": 3100,
+            "Turkey": 6500,
+            "vegetarian(No protein)": 0,
+            "beef kebab": 4100,
+            "Cowhead": 3500,
+            "Goatmeat": 1800,
+            "Asun": 5550,
+            "Extra Beef": 1000,
+        };
+
+        let cart = [];
+
+        function getProteinCost(protein) {
+            return proteinPricing[protein] || 0
+        };
+
+        function getProtein(itemId) {
+            const proteinMap = {
+                'jollof': 'protein_jollof',
+                'fried': 'protein_fried',
+                'salad': 'protein_salad',
+                'basmati': 'protein_basmati',
+                'coconut': 'protein_coconut',
+                'native': 'protein_native',
+                'meaty rice': 'protein_meaty rice',
+                'adalu': 'protein_adalu',
+                'white': 'protein_white',
+                'rice & beans': 'protein_rice & beans',
+                'stew': 'protein_stew',
+                'goatmeat': 'protein_goatmeat',
+                'chicken pepper': 'protein_chicken pepper',
+                'pasta': 'protein_pasta',
+                'asian': 'protein_asian', 
+                'catfish': 'protein_catfish', 
+                'ukazi': 'protein_ukazi',
+                'edik': 'protein_edik',
+                'afang': 'protein_afang',
+                'oha': 'protein_oha',
+                'egusi': 'protein_egusi',
+                'okro': 'protein_okro',
+                'ogbono': 'protein_ogbono',
+                'fisherman': 'protein_fisherman',
+                'plantain': 'protein_plantain',
+                'beans': 'protein_beans',
+                'yam': 'protein_yam',
+                'moi-moi': 'protein_moi-moi',
+                'boiled yam': 'protein_boiled yam',
+                'egg': 'protein_egg',
+                'croquettes': 'protein_croquettes',
+                'potatoes': 'protein_potatoes',
+                'dodo': 'protein_dodo'
+            };
+            
+            for (let key in proteinMap) {
+                if (itemId.includes(key)) {
+                    const select = document.getElementById(proteinMap[key]);
+                    return select ? select.value : '';
+                }
+            }
+            return '';
+        
+        }
+
+        function addToCart(itemId, itemName, price) {
+            const qtyInput = document.querySelector(`input[data-item="${itemId}"]`);
+            const qty = parseInt(qtyInput.value) || 1;
+            const protein = getProtein(itemId);
+            const proteinCost = getProteinCost(protein);
+
+            if (qty < 1) {
+                alert('Please enter a valid quantity');
+                return;
+            }
+
+            const cartId = `${itemId}_${protein}`;
+            const existingItem = cart.find(item => item.id === cartId);
+
+            if (existingItem) {
+                existingItem.qty += qty;
+            } else {
+                cart.push({
+                    id: itemId,
+                    name: itemName,
+                    price: price,
+                    protein: protein,
+                    proteinCost: proteinCost,
+                    qty: qty
+                });
+            }
+
+            qtyInput.value = 1;
+            updateCart();
+            
+            // Show brief feedback
+            const btn = event.target;
+            const originalText = btn.innerText;
+            btn.innerText = '✓ Added!';
+            setTimeout(() => { btn.innerText = originalText; }, 1500);
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartItemsDiv = document.getElementById('cartItems');
+            const cartCount = document.getElementById('cartCount');
+            const subtotalSpan = document.getElementById('subtotal');
+            const totalAmountSpan = document.getElementById('totalAmount');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+
+            if (cart.length === 0) {
+                cartItemsDiv.innerHTML = '<div class="cart-empty">Your cart is empty</div>';
+                cartCount.textContent = '0';
+                subtotalSpan.textContent = '₦0';
+                totalAmountSpan.textContent = '₦0';
+                checkoutBtn.disabled = true;
+                return;
+            }
+
+            let html = '';
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                const itemUnitPrice = item.price + item.proteinCost;
+                const itemTotal = itemUnitPrice * item.qty;
+                total += itemTotal;
+                
+                const proteinText = item.protein ? ` (${item.protein})` : '';
+                const proteinCostText = item.proteinCost > 0 ? `\n+₦${item.proteinCost.toLocaleString()} (protein)` : '';
+                html += `
+                    <div class="cart-item">
+                        <div style="flex-grow: 1;">
+                            <strong>${item.name}${proteinText}</strong><br/>
+                            <small>₦${item.price.toLocaleString()}${proteinCostText}<br/>
+                            Total: ₦${itemTotal.toLocaleString()} (x${item.qty})</small>
+                        </div>
+                        <button class="cart-item-remove" onclick="removeFromCart(${index})" style="background: #ff4444; color: white; border: none; padding: 5px 8px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; white-space: nowrap; margin-left: 5px;">✕ Remove</button>
+                    </div>
+                `;
+            });
+
+            cartItemsDiv.innerHTML = html;
+            cartCount.textContent = cart.reduce((sum, item) => sum + item.qty, 0);
+            subtotalSpan.textContent = `₦${total.toLocaleString()}`;
+            totalAmountSpan.textContent = `₦${total.toLocaleString()}`;
+            checkoutBtn.disabled = false;
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+
+            const customerName = prompt('Enter your full name:');
+            if (!customerName || customerName.trim() === '') return;
+
+            const customerPhone = prompt('Enter your phone number (with country code, e.g: +2349067837210):');
+
+            const orderData = {
+                name: customerName.trim(),
+                phone: customerPhone ? customerPhone.trim() : '',
+                items: cart
+            };
+
+            // Show loading state
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            const originalText = checkoutBtn.innerText;
+            checkoutBtn.innerText = 'Processing...';
+            checkoutBtn.disabled = true;
+
+            fetch('/api/order', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(orderData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    // Redirect to WhatsApp
+                    window.location.href = data.whatsapp_url;
+                    // Clear cart
+                    cart = [];
+                    updateCart();
+                } else {
+                    alert('Error processing order: ' + data.message);
+                    checkoutBtn.innerText = originalText;
+                    checkoutBtn.disabled = false;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error processing order. Please try again.');
+                checkoutBtn.innerText = originalText;
+                checkoutBtn.disabled = false;
+            });
+        }
+    </script>
+</body>
+</html>
